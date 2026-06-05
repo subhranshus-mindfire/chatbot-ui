@@ -14,11 +14,6 @@
   --color-bg-primary: #b79efa;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
 body {
   font-family: system-ui, sans-serif;

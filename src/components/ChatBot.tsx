@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import ZoeAvatarImg from "../assets/Zoe.png";
 import {
+  ArrowUp,
   Camera,
   FileText,
   Image,
   Mic,
-  Paperclip,
-  Send,
+  Plus,
   Sparkles,
   X,
 } from "lucide-react";
@@ -98,7 +98,7 @@ export default function ChatBot() {
       {isOpen && (
         <div className="w-[340px] sm:w-[380px] h-[520px] bg-bg-surface rounded-2xl shadow-2xl border border-border-muted flex flex-col overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border-muted bg-bg-surface">
+          <div className="flex items-center justify-between px-4 py-4 border-b border-border-muted bg-bg-surface">
             <div className="flex items-center gap-2">
               <Sparkles className="text-bg-button" size={18} />
               <span className="text-sm font-semibold text-text-primary">
@@ -114,22 +114,29 @@ export default function ChatBot() {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-            {messages.map((msg) => (
+          <div className="flex-1 overflow-y-auto px-4 pt-4 pb-3">
+            <div className="flex flex-col gap-3">
+            {messages.map((msg, i) => (
               <div
                 key={msg.id}
                 className={cn("flex", msg.role === "user" ? "justify-end" : "justify-start")}
               >
-                <div
-                  className={cn(
-                    "max-w-[78%] px-3 py-2 rounded-2xl text-sm leading-snug",
-                    msg.role === "user"
-                      ? "bg-bg-tertiary text-text-primary rounded-br-sm"
-                      : "bg-text-primary text-white rounded-bl-sm"
-                  )}
-                >
-                  {msg.content}
-                </div>
+                {msg.role === "user" ? (
+                  <div className="max-w-[78%] px-3 py-2 rounded-2xl rounded-br-sm text-sm leading-snug bg-bg-tertiary text-text-primary shadow-sm">
+                    {msg.content}
+                  </div>
+                ) : (
+                  <div
+                    className={cn(
+                      "max-w-[78%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm leading-snug",
+                      i === 0
+                        ? "bg-text-primary text-white"
+                        : "bg-bg-tertiary text-text-primary"
+                    )}
+                  >
+                    {msg.content}
+                  </div>
+                )}
               </div>
             ))}
 
@@ -144,17 +151,18 @@ export default function ChatBot() {
             )}
             <div ref={messagesEndRef} />
           </div>
+          </div>
 
           {/* Input bar */}
           <div className="px-3 py-3 border-t border-border-muted bg-bg-surface">
-            <div className="flex items-center gap-2 bg-bg-tertiary rounded-full px-3 py-2">
+            <div className="flex items-center gap-2 bg-bg-surface border border-border-muted rounded-2xl px-3 py-2">
               {/* Attachment */}
               <div className="relative" ref={attachMenuRef}>
                 <button
                   onClick={() => setAttachMenuOpen((prev) => !prev)}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-text-tertiary hover:text-text-primary hover:bg-bg-secondary transition-colors"
+                  className="w-7 h-7 rounded-full border border-border-muted flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-tertiary transition-colors"
                 >
-                  <Paperclip size={16} />
+                  <Plus size={16} />
                 </button>
 
                 {attachMenuOpen && (
@@ -204,7 +212,7 @@ export default function ChatBot() {
                     : "bg-bg-button-gray text-text-tertiary cursor-not-allowed"
                 )}
               >
-                <Send size={15} />
+                <ArrowUp size={16} />
               </button>
             </div>
           </div>
